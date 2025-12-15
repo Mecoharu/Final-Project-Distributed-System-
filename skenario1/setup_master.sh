@@ -3,7 +3,7 @@ set -e
 
 apt update -y
 
-apt install -y redis-server redis-tools
+apt install -y redis-server redis-tools bc
 
 pkill redis-server 2>/dev/null || true
 
