@@ -3,9 +3,6 @@ set -e
 
 MASTER_IP="192.168.122.205"  
 
-echo "===== SCENARIO 1: REDIS REPLICA SETUP ====="
-echo "Master IP: $MASTER_IP"
-
 apt update -y
 apt install -y redis-server redis-tools bc
 
@@ -20,8 +17,6 @@ redis-server \
 
 sleep 2
 
-echo "----- Redis Replica Replication Info -----"
 redis-cli INFO replication | grep -E "role|master_host|master_link_status"
 
-echo "===== REPLICA READY ====="
 
