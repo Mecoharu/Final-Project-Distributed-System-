@@ -74,6 +74,45 @@ Pastikan Anda memiliki lingkungan Linux/Unix dan utilitas berikut terinstal:
     sudo apt install -y bc
     ```
 3.  **Lingkungan Jaringan:** Eksperimen ini dirancang untuk dijalankan pada lingkungan yang mendukung banyak node dengan IP statis (misalnya, VM atau GNS3), seperti yang terlihat dari IP yang dikonfigurasi dalam skrip (e.g., `192.168.122.x`).
-
+   
 ## Susunan Project
 
+* **skenario1/** (Redis Replication)
+    * `setup_master.sh`
+    * `setup_replica.sh`
+    * `write_test.sh`
+    * `read_test_1.sh`
+    * `read_test_2.sh`
+* **skenario2/** (Redis Sentinel)
+    * `write_during_failover.sh`
+    * `read_after_failover.sh`
+* **skenario3/** (Redis Cluster)
+    * `redis_cluster_node_setup.sh`
+    * `redis_cluster_create_and_test.sh`
+    * `cluster_write_test.sh`
+    * `cluster_read_after_fail.sh`
+* `README.md`
+
+## Contoh Penggunaan (Running Skenario 1)
+
+Berikut adalah contoh menjalankan salah satu skenario:
+
+### Skenario 1: Replication Lag & Consistency
+
+1.  **Setup Master:** Jalankan skrip setup pada node yang akan menjadi master (misalnya, `192.168.122.205`).
+    ```bash
+    ./skenario1/setup_master.sh
+    ```
+2.  **Setup Replica:** Jalankan skrip setup pada node yang akan menjadi replica (misalnya, `192.168.122.60`).
+    ```bash
+    ./skenario1/setup_replica.sh
+    ```
+3.  **Lakukan Penulisan:** Tulis 1000 key ke master dan catat waktunya.
+    ```bash
+    ./skenario1/write_test.sh
+    ```
+4.  **Cek Konsistensi (Baca):** Segera cek konsistensi data dari replica.
+    ```bash
+    ./skenario1/read_test_1.sh
+    ```
+    Output akan menunjukkan jumlah *Missing keys* dan *Wrong values* sebagai indikasi *replication lag*.
